@@ -70,13 +70,13 @@ The wireframe works locally or on any static host. The workflow in `.github/work
 To activate GitHub Pages:
 
 1. Merge the website and workflow changes into `main`.
-2. Open [Settings → Pages](https://github.com/husam-mas/luma-art-website/settings/pages). Under **Build and deployment → Source**, choose **GitHub Actions**. Repository administrator access is required, and Pages must be available for the repository's visibility and plan.
-3. Open **Actions → Publish Luma ART website → Run workflow**, select `main`, and run it. This also retries publishing if the first automatic run happened before Pages was enabled.
+2. Open [Settings → Pages](https://github.com/husam-mas/luma-art-website/settings/pages). Under **Build and deployment → Source**, choose **GitHub Actions**. This one-time setup requires repository administrator access, and Pages must be available for the repository's visibility and plan.
+3. Open **Actions → Publish Luma ART website → Run workflow**, select `main`, and run it. If an earlier automatic run failed before Pages was enabled, this manual run retries publishing.
 4. Wait for **Publish website** to succeed, then follow the deployment link. Future changes to the wireframe on `main` publish automatically.
 
 **Expected public address after successful deployment:** https://husam-mas.github.io/luma-art-website/
 
-This configuration does not by itself confirm that Pages is enabled or the website is live. If the repository has a custom Pages domain, use the deployment URL instead. If running the workflow manually on another branch, the `github-pages` environment must allow deployment from that branch.
+The workflow cannot enable Pages through its repository token; Pages must first be enabled in repository settings as described above. This configuration does not by itself confirm that the website is live. If the repository has a custom Pages domain, use the deployment URL instead. If running the workflow manually on another branch, the `github-pages` environment must allow deployment from that branch.
 
 The published website remains a demonstration: no real payments, orders, enquiries or uploads are sent. Local image previews and relative stylesheet/script paths also work under the repository's Pages URL.
 
