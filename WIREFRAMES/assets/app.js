@@ -52,6 +52,7 @@ let previewURL = null;
 let returnHash = "#collections";
 let quoteDraft = null;
 let quoteArtworkFile = null;
+let quoteContextId = null;
 
 function escapeHTML(value) {
   return String(value).replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
@@ -133,6 +134,7 @@ function renderPersonalization(id) {
   }
   function updateDraft() {
     Object.assign(personalization, formData(form));
+    personalization.approval = form.elements.approval.checked;
     document.getElementById("text-preview").textContent = personalization.text || "Your words, beautifully considered.";
   }
   form.addEventListener("input", updateDraft);
@@ -175,7 +177,7 @@ function renderPersonalization(id) {
       return;
     }
     const needsQuote = product.quoteOnly || personalization.packaging.startsWith("Custom business");
-    location.hash = event.submitter.value === "quote" || needsQuote ? "#quote" : "#checkout";
+    location.hash = event.submitter.value === "quote" || needsQuote ? `#quote/${product.id}` : "#checkout";
   });
   updateDraft();
 }
@@ -192,7 +194,7 @@ function renderCheckout() {
   }
   const product = products.find(item => item.id === personalization.productId);
   if (product.quoteOnly || personalization.packaging.startsWith("Custom business")) {
-    location.hash = "#quote";
+    location.hash = `#quote/${product.id}`;
     return;
   }
   content.innerHTML = intro("02 / REVIEW YOUR GIFT", "A thoughtful final check.", "This demonstrates an individual checkout. No payment, contact details, or shipping information are collected.") +
@@ -205,8 +207,14 @@ function renderCheckout() {
   });
 }
 
-function renderQuote() {
-  const product = personalization && products.find(item => item.id === personalization.productId);
+function renderQuote(id = null) {
+  const product = personalization && id === personalization.productId && products.find(item => item.id === id);
+  const contextId = product ? product.id : null;
+  if (quoteContextId !== contextId) {
+    quoteDraft = null;
+    quoteArtworkFile = null;
+    quoteContextId = contextId;
+  }
   const draft = quoteDraft || {};
   content.innerHTML = intro("BUSINESS & BESPOKE GIFTING", "A gesture, thoughtfully scaled.", "Tell us what you have in mind. This form demonstrates a quote request; it does not send an enquiry.") +
     `<div class="dialog-layout"><aside class="preview-panel"><h3>${product ? escapeHTML(product.name) : "Considered gifting for your business."}</h3><p>Logo-led pieces, individual names, team welcomes and milestone gifts. Materials and engraving methods require compatibility checks.</p>${product ? orderSummary() : "<p class=\"field-help\">No confirmed minimum quantities, prices or lead times. These will be established after artwork and material review.</p>"}<p class="field-help">Local prototype: information stays in this page’s memory until refreshed. Do not enter confidential information.</p></aside>
@@ -217,11 +225,11 @@ function renderQuote() {
     </div></fieldset>
     <fieldset><legend>The gift brief</legend><div class="form-grid">
       <label class="full-width">Product or collection<select name="product">${["Not sure — help me curate", ...products.map(item => item.name)].map(name => `<option ${name === (draft.product || (product && product.name)) ? "selected" : ""}>${escapeHTML(name)}</option>`).join("")}</select></label>
-      <label>Estimated quantity<input name="quantity" type="number" min="1" max="1000000" step="1" required value="${escapeHTML(draft.quantity || (personalization && personalization.quantity) || "")}"></label>
+      <label>Estimated quantity<input name="quantity" type="number" min="1" max="1000000" step="1" required value="${escapeHTML(draft.quantity || (product && personalization.quantity) || "")}"></label>
       <label>Preferred delivery date<input name="deadline" type="date" required></label>
       <label class="full-width">Delivery destination<input name="destination" maxlength="200" required placeholder="City and country" value="${escapeHTML(draft.destination || "")}"></label>
       <label class="full-width">Packaging preferences<select name="packaging">${["Standard presentation", "Individual gift boxes", "Custom company-branded packaging", "Please advise"].map(name => `<option ${draft.packaging === name ? "selected" : ""}>${name}</option>`).join("")}</select></label>
-      <label class="full-width">Branding, budget & special requirements<textarea name="requirements" maxlength="2000" required placeholder="Logo placement, individual names, occasion, budget or any other details">${escapeHTML(draft.requirements || (personalization && (personalization.placement || personalization.text)) || "")}</textarea></label>
+      <label class="full-width">Branding, budget & special requirements<textarea name="requirements" maxlength="2000" required placeholder="Logo placement, individual names, occasion, budget or any other details">${escapeHTML(draft.requirements || (product && (personalization.placement || personalization.text)) || "")}</textarea></label>
       <div class="full-width"><label for="quote-artwork">Company artwork (optional)</label><input id="quote-artwork" type="file" accept="image/jpeg,image/png" aria-describedby="quote-upload-help quote-upload-error"><p class="field-help" id="quote-upload-help">PNG or JPEG, up to 10 MB. Local reference only.${quoteArtworkFile ? ` Selected: ${escapeHTML(quoteArtworkFile.name)}.` : ""}</p><p class="error-message" id="quote-upload-error" role="alert"></p></div>
     </div></fieldset>
     <label class="check-label"><input type="checkbox" required><span>I understand availability, material compatibility, pricing, delivery and artwork approval require confirmation. This request will not be sent.</span></label>
@@ -255,7 +263,7 @@ function renderQuote() {
     content.innerHTML = intro("REVIEW YOUR DEMO BRIEF", "Ready for a conversation.", "Nothing has been sent. A production form would securely submit these details to the Luma ART team.") +
       `<dl class="summary-list">${[["Company", "company"], ["Contact", "contact"], ["Email", "email"], ["Product", "product"], ["Quantity", "quantity"], ["Preferred delivery", "deadline"], ["Destination", "destination"], ["Packaging", "packaging"], ["Requirements", "requirements"]].map(([label, key]) => summaryRow(label, quoteDraft[key])).join("")}${summaryRow("Company artwork", quoteArtworkFile ? `${quoteArtworkFile.name} (local only)` : "Not provided")}${product ? summaryRow("Personalized piece", product.name) + summaryRow("Personal text", personalization.text) + summaryRow("Placement", personalization.placement) + summaryRow("Product artwork", artworkFile ? `${artworkFile.name} (local only)` : "Not provided") : ""}</dl>
       <p class="field-help">Next in production: compatibility check → tailored quotation → artwork approval → production. Requested dates are not delivery commitments.</p><div class="form-actions"><button id="edit-quote" class="button button-secondary" type="button">Edit your brief</button><a class="button" href="#corporate">Finish demo →</a></div>`;
-    document.getElementById("edit-quote").addEventListener("click", () => { renderQuote(); focusTitle(); });
+    document.getElementById("edit-quote").addEventListener("click", () => { renderQuote(quoteContextId); focusTitle(); });
     announce("Demo quote brief ready for review. No enquiry has been sent.");
     focusTitle();
   });
@@ -292,7 +300,7 @@ function route() {
   if (page === "shop") renderShop(id || "all");
   else if (page === "personalize") renderPersonalization(id);
   else if (page === "checkout") renderCheckout();
-  else if (page === "quote") renderQuote();
+  else if (page === "quote") renderQuote(id);
   else renderSupport(page);
   if (!dialog.open) dialog.showModal();
   focusTitle();
