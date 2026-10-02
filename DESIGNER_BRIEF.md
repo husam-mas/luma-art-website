@@ -23,34 +23,37 @@
 - Photo-engraved crystal cubes, hearts, spheres, icebergs
 - Custom shapes available
 - Crystal keychains
-- Price Range: $50–$300+
+- Pricing and dimensions: to be confirmed
 
 #### 2. **Wood Collection** (Artisan)
-- Hand-engraved designs on natural round wood slices
-- Hand-engraved designs on natural square wood slices
+- Personalized designs on natural round wood slices
+- Personalized designs on natural square wood slices
 - Wooden keychains with names, photos, logos
-- Price Range: $30–$150
+- Pricing and engraving method: to be confirmed
 
 #### 3. **Metal & Premium Materials**
 - Aluminum photo prints and plaques
 - Custom aluminum business cards
 - Personalized mirrors with engraving
-- Price Range: $25–$200
+- Pricing and material compatibility: to be confirmed
 
 #### 4. **Acrylic & Illuminated Gifts**
 - Acrylic photo engravings with wooden LED bases
-- Color-changing lighting options
-- Price Range: $60–$250
+- Lighting options subject to availability
+- Pricing: to be confirmed
 
 #### 5. **Corporate & Bulk Gifts**
 - Branded mugs, cups, water bottles
 - Custom notebooks and stationery
 - Personalized pens and keychains
 - Corporate awards and plaques
-- Minimum Order: 50+ units
+- Curated gift sets
+- Availability subject to equipment and material compatibility
+- Minimum quantities, pricing and lead times: to be confirmed
 
 #### 6. **Event & Wedding Collection**
 - Custom acrylic table signs
+- Personalized names and table details
 - Personalized celebration pieces
 
 ---
@@ -66,7 +69,7 @@
 
 2. **Corporate Buyers (B2B)**
    - Decision Makers: Marketing managers, HR directors, procurement teams
-   - Budget: $5,000–$50,000+
+   - Budget: captured during enquiry; no assumed minimum
    - Behavior: Request quotes, require bulk pricing, custom branding
 
 ---
@@ -76,10 +79,10 @@
 ### Visual Aesthetic
 - **Tone:** Luxury, sophisticated, timeless, professional
 - **Color Palette:** 
-  - Primary: Deep charcoal (#1a1a1a)
-  - Secondary: Ivory (#f5f5f5)
-  - Accent: Champagne gold (#d4af37)
-  - Secondary: Forest green (#4a5c3a)
+  - Primary: Deep charcoal (#262925)
+  - Secondary: Warm ivory (#f6f3ed)
+  - Accent: Muted champagne gold (#a18a59), decorative accents only
+  - Secondary: Forest green (#263d34)
 
 - **Typography:** 
   - Headlines: Elegant serif
@@ -141,17 +144,18 @@ Homepage → Corporate Section → Request Quote Form → Submit → Sales Follo
 ### Color Palette
 | Element | Color | Hex |
 |---------|-------|-----|
-| Primary Background | Charcoal | #1a1a1a |
-| Secondary Background | Ivory | #f5f5f5 |
-| Accent | Champagne Gold | #d4af37 |
-| Text Primary | Charcoal | #333 |
-| Text Secondary | Light Gray | #666 |
-| Border | Light Gray | #e0e0e0 |
+| Primary Background | Warm Ivory | #f6f3ed |
+| Secondary Background | Paper | #fdfbf7 |
+| Accent | Muted Champagne Gold | #a18a59 |
+| Text Primary | Charcoal | #262925 |
+| Text Secondary | Muted Olive Gray | #65685f |
+| Corporate Background | Forest Green | #263d34 |
+| Border | Warm Gray | #dcd7cc |
 
 ### Buttons & Components
-- **Primary Button:** Gold background, charcoal text
-- **Secondary Button:** Transparent, gold border
-- **Cards:** Subtle shadow, generous padding (30-40px)
+- **Primary Button:** Charcoal background, ivory text; inverted on forest green
+- **Secondary Button:** Transparent, warm gray border
+- **Cards:** Large material imagery, restrained borders and generous spacing
 - **Inputs:** Clean border, gold focus state
 - **Hover Effects:** Subtle lift + shadow increase
 
@@ -184,9 +188,9 @@ Homepage → Corporate Section → Request Quote Form → Submit → Sales Follo
 
 ### Key Interactions
 - Hover states on all clickable elements
-- Real-time 3D product preview (personalization page)
-- Drag & drop file upload
-- Live chat widget
+- Local reference preview in the prototype; production engraving proof is a separate approval step
+- Accessible native file selection in the prototype; secure uploads required for production
+- 3D previews, drag-and-drop uploads and live chat are future scope, not implemented features
 - Loading states and animations
 
 ### Integrations
@@ -223,6 +227,38 @@ Homepage → Corporate Section → Request Quote Form → Submit → Sales Follo
 
 ---
 
-**Status:** Ready for Designer Review  
+## Clickable Prototype & Handoff
+
+Open `WIREFRAMES/index.html` directly in a modern browser. There are no dependencies, external fonts, remote images or build steps.
+
+### Implemented journeys
+
+- **Homepage:** Brand introduction, six collections, featured gifts, personalization process, corporate gifting, craft story, concept gallery, FAQs and footer.
+- **Collections:** Filterable product concepts, including all crystal shapes and keychains, wood slices and keychains, illuminated acrylic and mirrors, aluminum pieces/cards, celebration details and compatible corporate-gift concepts.
+- **Individual:** Choose product → select local artwork → enter text and placement → choose options, quantity and packaging → acknowledge artwork approval → review → complete a clearly labelled demo order.
+- **Business:** Start directly or from a personalized piece → company/contact details → quantity, branding, destination, preferred deadline and packaging → local artwork selection → review a demo quote brief.
+- **Support:** About, craftsmanship, inspiration gallery, contact, FAQs and photo/personalization guidance. Supporting content is intentionally accessible from homepage sections and dialog panels rather than separate page files.
+
+### Visual and interaction requirements
+
+Use editorial serif headings, restrained sans-serif body text, generous spacing and material-led imagery. Replace all labelled CSS concept illustrations with approved, large, softly lit product photography. Do not present illustrations as completed work or invent reviews. Maintain visible keyboard focus, labelled forms, modal keyboard containment, Escape dismissal, responsive layouts and reduced-motion support.
+
+### Prototype boundaries
+
+No real orders, payments, uploads, enquiries or persistent storage are implemented. Files and form data remain local in page memory and clear on refresh. Checkout deliberately does not collect payment or shipping information. The reference preview is not a 3D engraving simulation or approved artwork. No prices or delivery guarantees are invented.
+
+The 15-page list above describes the eventual production design scope; accounts, order tracking, payment/shipping integrations, CRM, email, analytics and real artwork approval are not part of this clickable prototype.
+
+### Confirm before production
+
+1. English-only launch or bilingual English/Arabic, including RTL layouts.
+2. Individual direct checkout and separate corporate quotation flow.
+3. Final logo, palette, owned product photographs and verified brand/workshop story.
+4. Catalogue, dimensions, prices/currency, compatible materials/equipment, quantities and packaging availability.
+5. Artwork quality requirements, approval ownership, turnaround, shipping and personalized-item policies.
+6. Public contact details, secure file handling, retention/deletion, rights consent, privacy and payment provider.
+7. Hosting configuration. This repository contains a shareable static prototype; publishing is a separate step.
+
+**Status:** Prototype ready for designer review; business assumptions require confirmation
 **Contact:** husam@mtmdigital.dev  
 **Repository:** https://github.com/husam-mas/luma-art-website
